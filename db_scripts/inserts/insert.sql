@@ -1,0 +1,51 @@
+INSERT INTO types (id, name, generation) VALUES
+(
+	(1, "normal", 1),
+	(2, "fire", 1),
+	(3, "water", 1),
+	(4, "electric", 1),
+	(5, "grass", 1),
+	(6, "ice", 1),
+	(7, "fighting", 1),
+	(8, "poison", 1),
+	(9, "ground", 1),
+	(10, "flying", 1),
+	(11, "psychic", 1),
+	(12, "bug", 1),
+	(13, "rock", 1),
+	(14, "ghost", 1),
+	(15, "dragon", 1),
+	(16, "steel", 2),
+	(17, "dark", 2),
+	(18, "fairy", 6)
+);
+
+INSERT INTO natures (id, name, stat_up, stat_down) VALUES
+(
+	(1, "hardy", "atk", "atk"),
+	(2, "lonely", "atk", "def"),
+	(3, "brave", "atk", "spe"),
+	(4, "adamant", "atk", "spa"),
+	(5, "naughty", "atk", "spd"),
+	(6, "bold", "def", "atk"),
+	(7, "docile", "def", "def"),
+	(8, "relaxed", "def", "spe"),
+	(9, "impish", "def", "spa"),
+	(10, "lax", "def", "spd"),
+	(11, "timid", "spe", "atk"),
+	(12, "hasty", "spe", "def"),
+	(13, "serious", "spe", "spe"),
+	(14, "jolly", "spe", "spa"),
+	(15, "naive", "spe", "spd"),
+	(16, "modest", "spa", "atk"),
+	(17, "mild", "spa", "def"),
+	(18, "quiet", "spa", "spe"),
+	(19, "bashful", "spa", "spa"),
+	(20, "rash", "spa", "spd"),
+	(21, "calm", "spd", "atk"),
+	(22, "gentle", "spd", "def"),
+	(23, "sassy", "spd", "spe"),
+	(24, "careful", "spd", "spa"),
+	(25, "quirky", "spd", "spd")
+);
+

@@ -51,8 +51,9 @@ CREATE TABLE pokemon
 (
 	id			SERIAL		PRIMARY KEY,
 	name			VARCHAR(20)	NOT NULL,
-	type			VARCHAR(20)	NOT NULL,
 	base_stats		JSON		NOT NULL,	
+	id_type_1		SMALLINT	NOT NULL	REFERENCES types ON DELETE CASCADE ON UPDATE CASCADE,
+	id_type_2		SMALLINT			REFERENCES types ON DELETE CASCADE ON UPDATE CASCADE,
 	id_ability_1		INT		NOT NULL	REFERENCES abilities ON DELETE CASCADE ON UPDATE CASCADE,
 	id_ability_2		INT				REFERENCES abilities ON DELETE CASCADE ON UPDATE CASCADE,
 	id_hidden_ability	INT				REFERENCES abilities ON DELETE CASCADE ON UPDATE CASCADE,
@@ -61,14 +62,15 @@ CREATE TABLE pokemon
 
 CREATE TABLE movements
 (
-	id		SERIAL		PRIMARY KEY,
-	name		VARCHAR(20)	NOT NULL,
-	description	TEXT		NOT NULL,
-	power		SMALLINT,
-	precision	SMALLINT,
-	type		VARCHAR(10)	NOT NULL,
-	category	INT		NOT NULL,
-	generation	SMALLINT	NOT NULL
+	id			SERIAL		PRIMARY KEY,
+	name			VARCHAR(20)	NOT NULL,
+	description		TEXT		NOT NULL,
+	power			SMALLINT,
+	precision		SMALLINT,
+	id_type			SMALLINT	NOT NULL	REFERENCES types ON DELETE CASCADE ON UPDATE CASCADE,
+	category		INT		NOT NULL,
+	generation		SMALLINT	NOT NULL,
+	unavailable_from	SMALLINT
 );
 
 CREATE TABLE pokemon_movements
@@ -96,9 +98,17 @@ CREATE TABLE natures
 
 CREATE TABLE objects
 (
+	id			SERIAL		PRIMARY KEY,
+	name			VARCHAR(20)	NOT NULL,
+	description		TEXT		NOT NULL,
+	generation		SMALLINT	NOT NULL,
+	unavailable_from	SMALLINT
+);
+
+CREATE TABLE types
+(
 	id		SERIAL		PRIMARY KEY,
-	name		VARCHAR(20)	NOT NULL,
-	description	TEXT		NOT NULL,
+	name		VARCHAR(10)	NOT NULL,
 	generation	SMALLINT	NOT NULL
 );
 
