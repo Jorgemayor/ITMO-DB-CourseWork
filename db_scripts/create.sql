@@ -123,6 +123,7 @@ CREATE TABLE selected_pokemon
 	moveset		JSON		NOT NULL,
 	IVs		JSON		NOT NULL,
 	EVs		JSON		NOT NULL,
-	shiny		BOOLEAN		NOT NULL
+	shiny		BOOLEAN		DEFAULT FALSE,
+	nickname	VARCHAR(20)
 );
 
