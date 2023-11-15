@@ -33,7 +33,7 @@ CREATE TABLE trainers_tournaments
 CREATE TABLE formats
 (
 	id		SERIAL		PRIMARY KEY
-	name		VARCHAR(20)	NOT NULL,
+	name		VARCHAR(30)	NOT NULL,
 	generation	SMALLINT	NOT NULL,
 	year		SMALLINT	NOT NULL,
 	rules		JSON		NOT NULL
@@ -52,7 +52,7 @@ CREATE TABLE  matches
 CREATE TABLE pokemon
 (
 	id			SERIAL		PRIMARY KEY,
-	name			VARCHAR(20)	NOT NULL,
+	name			TEXT		NOT NULL,
 	base_stats		JSON		NOT NULL,	
 	id_type_1		SMALLINT	NOT NULL	REFERENCES types ON DELETE CASCADE ON UPDATE CASCADE,
 	id_type_2		SMALLINT			REFERENCES types ON DELETE CASCADE ON UPDATE CASCADE,
@@ -65,7 +65,7 @@ CREATE TABLE pokemon
 CREATE TABLE movements
 (
 	id			SERIAL		PRIMARY KEY,
-	name			VARCHAR(20)	NOT NULL,
+	name			TEXT		NOT NULL,
 	description		TEXT		NOT NULL,
 	power			SMALLINT,
 	precision		SMALLINT,
