@@ -2,6 +2,26 @@ from urllib.request import Request, urlopen
 import json_repair
 import json
 
+types = {
+	"normal": 1,
+	"fire": 2,
+	"water": 3,
+	"electric": 4,
+	"grass": 5,
+	"ice": 6,
+	"fighting": 7,
+	"poison": 8,
+	"ground": 9,
+	"flying": 10,
+	"psychic": 11,
+	"bug": 12,
+	"rock": 13,
+	"ghost": 14,
+	"dragon": 15,
+	"steel": 16,
+	"dark": 17,
+	"fairy": 18
+}
 
 headers = {
 	'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) '
@@ -33,15 +53,58 @@ def getItems():
 				desc = item['desc']
 				gen = item['gen']
 				if(name and desc and gen):
-					query += f'\t("{item["name"]}", "{item["desc"]}", {item["gen"]}),\n'
+					query += f'\t("{name}", "{desc}", {gen}),\n'
 				else:
 					print("Attribute not defined\n", item)
 			except KeyError:
 				print("Exception\n", item)
-		query = query[:-2] + "\n);"
+		query = query[:-2] + "\n);\n"
 		q.write(query)
 	print("Items fetched")
 
+
+
+def getPokemon():
+	url = "https://play.pokemonshowdown.com/data/pokedex.json"
+	req = Request(url=url, headers=headers)
+	response = urlopen(req).read()
+	pokemon = json.loads(response)
+	
+	query = "INSERT INTO pokemon (name, base_stats, id_type_1, id_type_2, id_ability_1, id_ability_2, id_hidden_ability, generation) VALUES\n(\n"
+	
+	with open("insertPokemon.sql", "w") as q:
+		for key in pokemon.keys():
+			if key == "missingno":
+				break
+							
+			pkmn = pokemon[key]
+			try:
+				name = pkmn["name"]
+				base_stats = str(pkmn["baseStats"])
+				pkmn_types = pkmn["types"]
+				id_type_1 = types[pkmn_types[0].lower()]
+				id_type_2 = "null" if len(pkmn_types) != 2 else types[pkmn_types[1].lower()]
+				if all(v is not None for v in []):
+					query += f'\t("{name}", "{base_stats}", {id_type_1}, {id_type_2}),\n'
+				else:
+					print("Attribute not defined\n", pkmn)
+			except KeyError:
+				print("Exception\n", pkmn)
+		query = query[:-2] + "\n);\n"
+		q.write(query)
+	print("Pokemon fetched")
+
+def getAbilities():
+	return
+
+
+def getMoves():
+	return
+
+
+def getLearnset():
+	return
+
 if __name__ == "__main__":
-	getItems()
+	getPokemon()
 
