@@ -23,6 +23,18 @@ types = {
 	"fairy": 18
 }
 
+generations = {
+	1: [1, 151],
+	2: [152, 251],
+	3: [252, 386],
+	4: [387, 493],
+	5: [494, 649],
+	6: [650, 721],
+	7: [722, 809],
+	8: [810, 905],
+	9: [906, 1017]
+}
+
 headers = {
 	'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) '
 	'AppleWebKit/537.11 (KHTML, like Gecko) '
@@ -73,6 +85,7 @@ def getPokemon():
 	query = "INSERT INTO pokemon (name, base_stats, id_type_1, id_type_2, id_ability_1, id_ability_2, id_hidden_ability, generation) VALUES\n(\n"
 	
 	with open("insertPokemon.sql", "w") as q:
+		gen = 1
 		for key in pokemon.keys():
 			if key == "missingno":
 				break
@@ -84,13 +97,22 @@ def getPokemon():
 				pkmn_types = pkmn["types"]
 				id_type_1 = types[pkmn_types[0].lower()]
 				id_type_2 = "null" if len(pkmn_types) != 2 else types[pkmn_types[1].lower()]
-				if all(v is not None for v in []):
-					query += f'\t("{name}", "{base_stats}", {id_type_1}, {id_type_2}),\n'
+				abilities = pkmn["abilities"]
+				id_ability_1 = 1 # abilities["0"]
+				id_ability_2 = "null" if "1" not in abilities.keys() else 1 # abilities["1"]
+				id_hidden_ability = "null" if "H" not in abilities.keys() else 1 # abilities["H"]
+				num = pkmn["num"]
+				attributes = [name, base_stats, id_type_1, id_type_2, id_ability_1, id_ability_2, id_hidden_ability, gen]
+				if not(generations[gen][0] <= num and num <= generations[gen][1]):
+					gen += 1 
+				if all(v is not None for v in attributes):
+					query += f'\t("{name}", "{base_stats}", {id_type_1}, {id_type_2}, {id_ability_1}, {id_ability_2}, {id_hidden_ability}, {gen}),\n'
 				else:
 					print("Attribute not defined\n", pkmn)
 			except KeyError:
 				print("Exception\n", pkmn)
 		query = query[:-2] + "\n);\n"
+		print("TEST\n")
 		q.write(query)
 	print("Pokemon fetched")
 
