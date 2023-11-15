@@ -68,9 +68,10 @@ CREATE TABLE movements
 	name			TEXT		NOT NULL,
 	description		TEXT		NOT NULL,
 	power			SMALLINT,
-	precision		SMALLINT,
+	accuracy		SMALLINT,
+	pp			SMALLINT	NOT NULL,
 	id_type			SMALLINT	NOT NULL	REFERENCES types ON DELETE CASCADE ON UPDATE CASCADE,
-	category		INT		NOT NULL,
+	category		TEXT		NOT NULL,
 	generation		SMALLINT	NOT NULL,
 	unavailable_from	SMALLINT
 );

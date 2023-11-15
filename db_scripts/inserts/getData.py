@@ -112,21 +112,73 @@ def getPokemon():
 			except KeyError:
 				print("Exception\n", pkmn)
 		query = query[:-2] + "\n);\n"
-		print("TEST\n")
 		q.write(query)
 	print("Pokemon fetched")
 
+
 def getAbilities():
+	url = "https://play.pokemonshowdown.com/data/abilities.js"
+	req = Request(url=url, headers=headers)
+	response = urlopen(req).read()
+	data = response.split(b"=")[1].strip().decode()
+	abilities = json_repair.loads(data)
+	
+	query = "INSERT INTO abilities (name, description, generation) VALUES\n(\n"
+	
+	with open("insertAbilities.sql", "w") as q:
+		for key in abilities.keys():
+			ability = abilities[key]
+			name = ability["name"]
+			desc = ability["desc"]
+			gen = 1
+			attributes = [name, desc, gen]
+			if all(v is not None for v in attributes):
+				query += f'\t("{name}", "{desc}", {gen}),\n'
+			else:
+				print("Attirbute not defined\n", ability)
+		query = query[:-2] + "\n);\n"
+		q.write(query)
+	print("Abilities fetched")
 	return
 
 
 def getMoves():
-	return
+	url = "https://play.pokemonshowdown.com/data/moves.json"
+	req = Request(url=url, headers=headers)
+	response = urlopen(req).read()
+	moves = json.loads(response)
+
+	query = "INSERT INTO movements (name, description, power, accuracy, pp, id_type, category, generation, unavailable_from) VALUES\n(\n"
+	with open("insertMoves.sql", "w") as q:
+		for key in moves.keys():
+			move = moves[key]
+			try:
+				name = move["name"]
+				desc = move["desc"]
+				power = move["basePower"]
+				acc = int(move["accuracy"])
+				pp = move["pp"]
+				id_type = types[move["type"].lower()]
+				cat = move["category"]
+				# gen = 1
+				# unavailable_from = 10
+
+				query += f'\t"{name}", "{desc}", {power}, {acc}, {pp}, {id_type}, "{cat}", 1, 10),\n'
+			except KeyError:
+				print("Exception\n", move)
+		query = query[:-2] + "\n);\n"
+		q.write(query)
+	print("Moves fetched")
 
 
 def getLearnset():
+	url = "https://play.pokemonshowdown.com/data/learnsets.json"
 	return
 
 if __name__ == "__main__":
-	getPokemon()
+	# getItems()
+	# getPokemon()
+	# getAbilities()
+	# getMoves()
+	getLearnset()
 
