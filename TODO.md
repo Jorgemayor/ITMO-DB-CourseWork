@@ -3,6 +3,7 @@
 ## Todo
 
 - [ ] Insert event pokemon in the database
+- [ ] Give support to variation forms
 
 ### In Progress
 
