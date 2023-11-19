@@ -1,6 +1,7 @@
 from urllib.request import Request, urlopen
 import json_repair
 import json
+import re
 
 types = {
 	"normal": 1,
@@ -63,9 +64,13 @@ def getItems():
 			try:
 				name = item['name']
 				desc = item['desc']
+				if "'" in desc:
+					indexes = [m.start() for m in re.finditer("'", desc)]
+					for i in indexes:
+						desc = desc[:i] + "'" + desc[i:]
 				gen = item['gen']
 				if(name and desc and gen):
-					query += f'\t("{name}", "{desc}", {gen}),\n'
+					query += f"\t('{name}', '{desc}', {gen}),\n"
 				else:
 					print("Attribute not defined\n", item)
 			except KeyError:
@@ -130,6 +135,10 @@ def getAbilities():
 			ability = abilities[key]
 			name = ability["name"]
 			desc = ability["desc"]
+			if "'" in desc:
+				indexes = [m.start() for m in re.finditer("'", desc)]
+				for i in indexes:
+					desc = desc[:i] + "'" + desc[i:]
 			gen = 1
 			attributes = [name, desc, gen]
 			if all(v is not None for v in attributes):
@@ -155,6 +164,10 @@ def getMoves():
 			try:
 				name = move["name"]
 				desc = move["desc"]
+				if "'" in desc:
+					indexes = [m.start() for m in re.finditer("'", desc)]
+					for i in indexes:
+						desc = desc[:i] + "'" + desc[i:]
 				power = move["basePower"]
 				acc = int(move["accuracy"])
 				pp = move["pp"]
@@ -176,9 +189,9 @@ def getLearnset():
 	return
 
 if __name__ == "__main__":
-	# getItems()
-	# getPokemon()
-	# getAbilities()
-	# getMoves()
+	getItems()
+	getPokemon()
+	getAbilities()
+	getMoves()
 	getLearnset()
 
