@@ -1,25 +1,28 @@
-DROP TABLE trainers;
-
-DROP TABLE teams;
-
-DROP TABLE tournaments;
+DROP TABLE matches;
 
 DROP TABLE trainers_tournaments;
 
-DROP TABLE regulations;
+DROP TABLE pokemon_movements;
 
-DROP TABLE matches;
+DROP TABLE selected_pokemon;
+
+DROP TABLE items;
+
+DROP TABLE teams;
+
+DROP TABLE trainers;
+
+DROP TABLE tournaments;
 
 DROP TABLE pokemon;
 
 DROP TABLE movements;
 
-DROP TABLE pokemon_movements;
-
 DROP TABLE abilities;
 
 DROP TABLE natures;
 
-DROP TABLE objects;
+DROP TABLE types;
 
-DROP TABLE selected_pokemon; 
+DROP TABLE formats;
+

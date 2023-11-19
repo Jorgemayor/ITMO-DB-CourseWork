@@ -4,7 +4,16 @@ CREATE TABLE trainers
 	username	VARCHAR(12)	NOT NULL	UNIQUE,
 	password	VARCHAR(20)	NOT NULL,
 	email		VARCHAR(256)			UNIQUE,
-	created		TIMESTAMP	NOT NULL
+	createdAt	TIMESTAMP	DEFAULT NOW()
+);
+
+CREATE TABLE formats
+(
+	id		SERIAL		PRIMARY KEY,
+	name		VARCHAR(30)	NOT NULL,
+	generation	SMALLINT	NOT NULL,
+	year		SMALLINT	NOT NULL,
+	rules		JSON		NOT NULL
 );
 
 CREATE TABLE teams
@@ -30,23 +39,29 @@ CREATE TABLE trainers_tournaments
 	PRIMARY KEY(id_trainer, id_tournament)
 );
 
-CREATE TABLE formats
-(
-	id		SERIAL		PRIMARY KEY
-	name		VARCHAR(30)	NOT NULL,
-	generation	SMALLINT	NOT NULL,
-	year		SMALLINT	NOT NULL,
-	rules		JSON		NOT NULL
-);
-
 CREATE TABLE  matches
 (
 	id_tournament	INT		REFERENCES tournaments	ON DELETE CASCADE ON UPDATE CASCADE,
-	id_trainer_1	INT		REFERENCES trainers	ON DELETE CASCADE ON UPDATE CASCADE,
-	id_trainer_2	INT		REFERENCES trainers	ON DELETE CASCADE ON UPDATE CASCADE,
+	id_team_1	INT		REFERENCES teams	ON DELETE CASCADE ON UPDATE CASCADE,
+	id_team_2	INT		REFERENCES teams	ON DELETE CASCADE ON UPDATE CASCADE,
 	winner		SMALLINT	DEFAULT 0 CHECK (winner in (0, 1, 2)),
-	CHECK (id_trainer_1 != id_trainer_2),
-	PRIMARY KEY(id_tournament, id_trainer_1, id_trainer_2)
+	CHECK (id_team_1 != id_team_2),
+	PRIMARY KEY(id_tournament, id_team_1, id_team_2)
+);
+
+CREATE TABLE types
+(
+	id		SERIAL		PRIMARY KEY,
+	name		VARCHAR(10)	NOT NULL,
+	generation	SMALLINT	NOT NULL
+);
+
+CREATE TABLE abilities
+(
+	id		SERIAL		PRIMARY KEY,
+	name		VARCHAR(20)	NOT NULL,
+	description	TEXT		NOT NULL,
+	generation	SMALLINT	NOT NULL
 );
 
 CREATE TABLE pokemon
@@ -83,14 +98,6 @@ CREATE TABLE pokemon_movements
 	PRIMARY KEY(id_pokemon, id_movement)
 );
 
-CREATE TABLE abilities
-(
-	id		SERIAL		PRIMARY KEY,
-	name		VARCHAR(20)	NOT NULL,
-	description	TEXT		NOT NULL,
-	generation	SMALLINT	NOT NULL
-);
-
 CREATE TABLE natures
 (
 	id		SERIAL		PRIMARY KEY,
@@ -108,13 +115,6 @@ CREATE TABLE items
 	unavailable_from	SMALLINT
 );
 
-CREATE TABLE types
-(
-	id		SERIAL		PRIMARY KEY,
-	name		VARCHAR(10)	NOT NULL,
-	generation	SMALLINT	NOT NULL
-);
-
 CREATE TABLE selected_pokemon
 (
 	id		SERIAL		PRIMARY KEY,
@@ -122,7 +122,7 @@ CREATE TABLE selected_pokemon
 	id_team		INT 		NOT NULL	REFERENCES teams	ON DELETE CASCADE ON UPDATE CASCADE,
 	ability		SMALLINT	NOT NULL	CHECK (ability in (0, 1, 2)),
 	id_nature	INT 		NOT NULL	REFERENCES natures	ON DELETE CASCADE ON UPDATE CASCADE,
-	id_item		INT		NOT NULL	REFERENCES objects	ON DELETE CASCADE ON UPDATE CASCADE,
+	id_item		INT		NOT NULL	REFERENCES items	ON DELETE CASCADE ON UPDATE CASCADE,
 	moveset		JSON		NOT NULL,
 	IVs		JSON		NOT NULL,
 	EVs		JSON		NOT NULL,
