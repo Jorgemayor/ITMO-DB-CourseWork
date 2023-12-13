@@ -1,25 +1,28 @@
-DELETE FROM trainers;
-
-DELETE FROM teams;
-
-DELETE FROM tournaments;
+DELETE FROM matches;
 
 DELETE FROM trainers_tournaments;
 
-DELETE FROM regulations;
+DELETE FROM pokemon_movements;
 
-DELETE FROM matches;
+DELETE FROM selected_pokemon; 
+
+DELETE FROM items;
+
+DELETE FROM teams;
+
+DELETE FROM trainers;
+
+DELETE FROM tournaments;
 
 DELETE FROM pokemon;
 
 DELETE FROM movements;
 
-DELETE FROM pokemon_movements;
-
 DELETE FROM abilities;
 
 DELETE FROM natures;
 
-DELETE FROM objects;
+DELETE FROM types;
 
-DELETE FROM selected_pokemon; 
+DELETE FROM formats;
+

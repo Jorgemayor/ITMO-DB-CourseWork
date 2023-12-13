@@ -59,7 +59,7 @@ CREATE TABLE types
 CREATE TABLE abilities
 (
 	id		SERIAL		PRIMARY KEY,
-	name		VARCHAR(20)	NOT NULL,
+	name		VARCHAR(30) NOT NULL,
 	description	TEXT		NOT NULL,
 	generation	SMALLINT	NOT NULL
 );

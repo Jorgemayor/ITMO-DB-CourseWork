@@ -1,4 +1,4 @@
-INSERT INTO types (id, name, generation) VALUES (
+INSERT INTO types (id, name, generation) VALUES
 	(1, 'normal', 1),
 	(2, 'fire', 1),
 	(3, 'water', 1),
@@ -8,7 +8,7 @@ INSERT INTO types (id, name, generation) VALUES (
 	(7, 'fighting', 1),
 	(8, 'poison', 1),
 	(9, 'ground', 1),
-	(0, 'flying', 1),
+	(10, 'flying', 1),
 	(11, 'psychic', 1),
 	(12, 'bug', 1),
 	(13, 'rock', 1),
@@ -17,9 +17,9 @@ INSERT INTO types (id, name, generation) VALUES (
 	(16, 'steel', 2),
 	(17, 'dark', 2),
 	(18, 'fairy', 6)
-);
+;
 
-INSERT INTO natures (id, name, stat_up, stat_down) VALUES (
+INSERT INTO natures (id, name, stat_up, stat_down) VALUES
 	(1, 'hardy', 'atk', 'atk'),
 	(2, 'lonely', 'atk', 'def'),
 	(3, 'brave', 'atk', 'spe'),
@@ -45,5 +45,5 @@ INSERT INTO natures (id, name, stat_up, stat_down) VALUES (
 	(23, 'sassy', 'spd', 'spe'),
 	(24, 'careful', 'spd', 'spa'),
 	(25, 'quirky', 'spd', 'spd')
-);
+;
 

@@ -1,5 +1,4 @@
 INSERT INTO items (name, description, generation) VALUES
-(
 	('Ability Shield', 'Holder''s Ability cannot be changed by any effect.', 9),
 	('Abomasite', 'If held by an Abomasnow, this item allows it to Mega Evolve in battle.', 6),
 	('Absolite', 'If held by an Absol, this item allows it to Mega Evolve in battle.', 6),
@@ -193,7 +192,7 @@ INSERT INTO items (name, description, generation) VALUES
 	('Kee Berry', 'Raises holder''s Defense by 1 stage after it is hit by a physical attack. Single use.', 6),
 	('Kelpsy Berry', 'Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck.', 3),
 	('Kangaskhanite', 'If held by a Kangaskhan, this item allows it to Mega Evolve in battle.', 6),
-	('King's Rock', 'Holder''s attacks without a chance to make the target flinch gain a 10% chance to make the target flinch. Evolves Poliwhirl into Politoed and Slowpoke into Slowking when traded.', 2),
+	('King''s Rock', 'Holder''s attacks without a chance to make the target flinch gain a 10% chance to make the target flinch. Evolves Poliwhirl into Politoed and Slowpoke into Slowking when traded.', 2),
 	('Kommonium Z', 'If held by a Kommo-o with Clanging Scales, it can use Clangorous Soulblaze.', 7),
 	('Lagging Tail', 'Holder moves last in its priority bracket.', 4),
 	('Lansat Berry', 'Holder gains the Focus Energy effect when at 1/4 max HP or less. Single use.', 3),
@@ -535,4 +534,4 @@ INSERT INTO items (name, description, generation) VALUES
 	('PSN Cure Berry', '(Gen 2) Holder is cured if it is poisoned. Single use.', 2),
 	('Crucibellite', 'If held by a Crucibelle, this item allows it to Mega Evolve in battle.', 6),
 	('Vile Vial', 'If held by a Venomicon, its Poison- and Flying-type attacks have 1.2x power.', 8)
-);
+;

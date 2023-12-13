@@ -57,12 +57,16 @@ def getItems():
 	data = response.split(b'=')[1].strip().decode()
 	items = json_repair.loads(data)
 
-	query = "INSERT INTO items (name, description, generation) VALUES\n(\n"
+	query = "INSERT INTO items (name, description, generation) VALUES\n"
 	with open("insertItems.sql", "w") as q:
 		for key in items.keys():
 			item = items[key]
 			try:
 				name = item['name']
+				if "'" in name:
+					indexes = [m.start() for m in re.finditer("'", name)]
+					for i in indexes:
+						name = name[:i] + "'" + name[i:]
 				desc = item['desc']
 				if "'" in desc:
 					indexes = [m.start() for m in re.finditer("'", desc)]
@@ -75,7 +79,7 @@ def getItems():
 					print("Attribute not defined\n", item)
 			except KeyError:
 				print("Exception\n", item)
-		query = query[:-2] + "\n);\n"
+		query = query[:-2] + "\n;\n"
 		q.write(query)
 	print("Items fetched")
 
@@ -87,7 +91,7 @@ def getPokemon():
 	response = urlopen(req).read()
 	pokemon = json.loads(response)
 	
-	query = "INSERT INTO pokemon (name, base_stats, id_type_1, id_type_2, id_ability_1, id_ability_2, id_hidden_ability, generation) VALUES\n(\n"
+	query = "INSERT INTO pokemon (name, base_stats, id_type_1, id_type_2, id_ability_1, id_ability_2, id_hidden_ability, generation) VALUES\n"
 	
 	with open("insertPokemon.sql", "w") as q:
 		gen = 1
@@ -98,7 +102,14 @@ def getPokemon():
 			pkmn = pokemon[key]
 			try:
 				name = pkmn["name"]
-				base_stats = str(pkmn["baseStats"])
+				if "'" in name:
+					indexes = [m.start() for m in re.finditer("'", name)]
+					found = 0
+					for i in indexes:
+						i = i + found
+						found += 1
+						name = name[:i] + "'" + name[i:]
+				base_stats = str(pkmn["baseStats"]).replace("'", "\"")
 				pkmn_types = pkmn["types"]
 				id_type_1 = types[pkmn_types[0].lower()]
 				id_type_2 = "null" if len(pkmn_types) != 2 else types[pkmn_types[1].lower()]
@@ -111,12 +122,12 @@ def getPokemon():
 				if not(generations[gen][0] <= num and num <= generations[gen][1]):
 					gen += 1 
 				if all(v is not None for v in attributes):
-					query += f'\t("{name}", "{base_stats}", {id_type_1}, {id_type_2}, {id_ability_1}, {id_ability_2}, {id_hidden_ability}, {gen}),\n'
+					query += f"\t('{name}', '{base_stats}', {id_type_1}, {id_type_2}, {id_ability_1}, {id_ability_2}, {id_hidden_ability}, {gen}),\n"
 				else:
 					print("Attribute not defined\n", pkmn)
 			except KeyError:
 				print("Exception\n", pkmn)
-		query = query[:-2] + "\n);\n"
+		query = query[:-2] + "\n;\n"
 		q.write(query)
 	print("Pokemon fetched")
 
@@ -128,24 +139,31 @@ def getAbilities():
 	data = response.split(b"=")[1].strip().decode()
 	abilities = json_repair.loads(data)
 	
-	query = "INSERT INTO abilities (name, description, generation) VALUES\n(\n"
+	query = "INSERT INTO abilities (name, description, generation) VALUES\n"
 	
 	with open("insertAbilities.sql", "w") as q:
 		for key in abilities.keys():
 			ability = abilities[key]
 			name = ability["name"]
+			if "'" in name:
+				indexes = [m.start() for m in re.finditer("'", name)]
+				for i in indexes:
+					name = name[:i] + "'" + name[i:]
 			desc = ability["desc"]
 			if "'" in desc:
 				indexes = [m.start() for m in re.finditer("'", desc)]
+				found = 0
 				for i in indexes:
+					i = i + found
+					found += 1
 					desc = desc[:i] + "'" + desc[i:]
 			gen = 1
 			attributes = [name, desc, gen]
 			if all(v is not None for v in attributes):
-				query += f'\t("{name}", "{desc}", {gen}),\n'
+				query += f"\t('{name}', '{desc}', {gen}),\n"
 			else:
 				print("Attirbute not defined\n", ability)
-		query = query[:-2] + "\n);\n"
+		query = query[:-2] + "\n;\n"
 		q.write(query)
 	print("Abilities fetched")
 	return
@@ -157,17 +175,23 @@ def getMoves():
 	response = urlopen(req).read()
 	moves = json.loads(response)
 
-	query = "INSERT INTO movements (name, description, power, accuracy, pp, id_type, category, generation, unavailable_from) VALUES\n(\n"
+	query = "INSERT INTO movements (name, description, power, accuracy, pp, id_type, category, generation, unavailable_from) VALUES\n"
 	with open("insertMoves.sql", "w") as q:
 		for key in moves.keys():
 			move = moves[key]
 			try:
 				name = move["name"]
+				if "'" in name:
+					indexes = [m.start() for m in re.finditer("'", name)]
+					for i in indexes:
+						name = name[:i] + "'" + name[i:]
 				desc = move["desc"]
 				if "'" in desc:
 					indexes = [m.start() for m in re.finditer("'", desc)]
+					count = 0
 					for i in indexes:
-						desc = desc[:i] + "'" + desc[i:]
+						desc = desc[:i+count] + "'" + desc[i+count:]
+						count += 1
 				power = move["basePower"]
 				acc = int(move["accuracy"])
 				pp = move["pp"]
@@ -176,10 +200,10 @@ def getMoves():
 				# gen = 1
 				# unavailable_from = 10
 
-				query += f'\t"{name}", "{desc}", {power}, {acc}, {pp}, {id_type}, "{cat}", 1, 10),\n'
+				query += f"\t('{name}', '{desc}', {power}, {acc}, {pp}, {id_type}, '{cat}', 1, 10),\n"
 			except KeyError:
 				print("Exception\n", move)
-		query = query[:-2] + "\n);\n"
+		query = query[:-2] + "\n;\n"
 		q.write(query)
 	print("Moves fetched")
 
