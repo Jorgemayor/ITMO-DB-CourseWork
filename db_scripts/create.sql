@@ -2,7 +2,7 @@ CREATE TABLE trainers
 (
 	id		SERIAL		PRIMARY KEY,
 	username	VARCHAR(12)	NOT NULL	UNIQUE,
-	password	VARCHAR(20)	NOT NULL,
+	password	VARCHAR(256)	NOT NULL,
 	email		VARCHAR(256)			UNIQUE,
 	createdAt	TIMESTAMP	DEFAULT NOW()
 );
