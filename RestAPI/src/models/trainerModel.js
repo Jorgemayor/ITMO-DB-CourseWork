@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Trainer = sequelize.define( "trainer", {
+    const Trainer = sequelize.define( "trainers", {
         username: {
             type: DataTypes.STRING,
             unique: true,
@@ -15,6 +15,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-    }, {timestamps: true}, )
+    }, {timestamps: false}, )
     return Trainer
 }
