@@ -1,11 +1,12 @@
 import React from 'react'
 import Navbar from './components/Navbar'
-import './App.css'
+import Footer from './components/Footer'
 import Home from './components/pages/Home'
 import Teams from './components/pages/Teams'
 import Tournaments from './components/pages/Tournaments'
 import Login from './components/pages/Login'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom' 
+import './App.css'
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path='/tournaments' element={<Tournaments/>}></Route>
           <Route path='/login' element={<Login/>}></Route>
         </Routes>
+        <Footer/>
       </Router>
     </>
   )
