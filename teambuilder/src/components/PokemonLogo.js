@@ -1,8 +1,8 @@
 export const PokemonLogo = () => {
   return (
     <svg id="svg" fill="#ffffff" stroke="#ffffff" width="50" height="50" version="1.1" viewBox="144 144 512 512" xmlns="http://www.w3.org/2000/svg">
-      <g id="IconSvg_bgCarrier" stroke-width="0"></g>
-      <g id="IconSvg_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0">
+      <g id="IconSvg_bgCarrier" strokeWidth="0"></g>
+      <g id="IconSvg_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" stroke="#CCCCCC" strokeWidth="0">
         <g xmlns="http://www.w3.org/2000/svg">
             <path d="m353.43 256.29-3.6055-12.07c-45.105 13.477-82.609 45.637-102.9 88.238l11.371 5.4141c18.766-39.387 53.438-69.125 95.137-81.582z"></path>
             <path d="m397.66 558.43v12.594c55.816 0 107.7-27.727 138.79-74.164l-10.469-7.0078c-28.742 42.945-76.711 68.578-128.32 68.578z"></path>
