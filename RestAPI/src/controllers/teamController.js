@@ -6,12 +6,12 @@ const Format = db.formats
 const getTeams = async (req, res) => {
     try {
         const teams = await Team.findAll({
-            include: { model: Format }
+            include: { model: Format },
+            where: {
+                private: false,
+            }
         })
-        return res.status(200).json({
-            message: "Ok",
-            data: teams
-        })
+        return res.status(200).send(teams)
     } catch(error) {
         console.log(error)
         res.status(error.status || 500).json({
@@ -41,14 +41,12 @@ const getTeamById = async (req, res) => {
 const getTeamsByTrainer = async (req, res) => {
     try {
         const teams = await Team.findAll({
+            include: { model: Format },
             where: {
                 id_trainer: parseInt(req.params.id),
             }
         })
-        return res.status(200).json({
-            message: "Ok",
-            data: teams
-        })
+        return res.status(200).send(teams)
     } catch(error) {
         console.log(error)
         res.status(error.status || 500).json({
