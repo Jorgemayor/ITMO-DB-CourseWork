@@ -9,9 +9,8 @@ function Teams() {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const teamResponse = await axios.get('localhost:3001/api/team')
+        const teamResponse = await axios.get('http://localhost:3001/api/team')
         setTeamList(teamResponse.data)
-        console.log(teamList)
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -19,6 +18,10 @@ function Teams() {
 
     fetchTeams()
   }, [])
+
+  useEffect(() => {
+    console.log(teamList)
+  }, [teamList])
 
   return (
     <>

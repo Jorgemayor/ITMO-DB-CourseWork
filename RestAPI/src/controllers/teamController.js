@@ -1,11 +1,17 @@
 const db = require("../models");
 
 const Team = db.teams;
+const Format = db.formats
 
 const getTeams = async (req, res) => {
     try {
-        const teams = await Team.findAll()
-        return res.status(200).send(teams);
+        const teams = await Team.findAll({
+            include: { model: Format }
+        })
+        return res.status(200).json({
+            message: "Ok",
+            data: teams
+        })
     } catch(error) {
         console.log(error)
         res.status(error.status || 500).json({
@@ -39,7 +45,10 @@ const getTeamsByTrainer = async (req, res) => {
                 id_trainer: parseInt(req.params.id),
             }
         })
-        return res.status(200).send(teams);
+        return res.status(200).json({
+            message: "Ok",
+            data: teams
+        })
     } catch(error) {
         console.log(error)
         res.status(error.status || 500).json({

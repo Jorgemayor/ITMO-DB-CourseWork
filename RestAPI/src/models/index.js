@@ -28,4 +28,5 @@ db.tournaments = require('./tournamentModel') (sequelize, DataTypes)
 db.trainers = require('./trainerModel') (sequelize, DataTypes)
 db.types = require('./typeModel') (sequelize, DataTypes)
 
+db.teams.belongsTo(db.formats, { foreignKey: 'id_format' });
 module.exports = db
