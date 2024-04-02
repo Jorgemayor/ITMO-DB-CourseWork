@@ -25,7 +25,7 @@ function Cards() {
           <ul className='cards__items'>
             <CardItem
               src='images/tournaments.jpg'
-              text='Register for tournaments in the platform'
+              text='Register for tournaments'
               label='Tournaments'
               path='/tournaments'
             />
