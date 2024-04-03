@@ -1,6 +1,6 @@
-const db = require("../models");
+const db = require("../models")
 
-const Team = db.teams;
+const Team = db.teams
 const Format = db.formats
 
 const getTeams = async (req, res) => {
@@ -65,10 +65,10 @@ const addTeam = async (req, res) => {
             name,
             private,
         }
-        const team = await Team.create(data);
+        const team = await Team.create(data)
 
         if (team) {
-            return res.status(201).send(team);
+            return res.status(201).send(team)
         } else {
             return res.status(409).send("Details are not correct")
         }
@@ -141,4 +141,4 @@ module.exports = {
     addTeam,
     updateTeam,
     deleteTeam,
-};
+}
