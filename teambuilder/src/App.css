@@ -17,28 +17,16 @@
   }
   
   .teams {
-    background-image: url('/public/images/img-2.jpg');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
     color: #fff;
     font-size: 100px;
   }
   
   .tournaments {
-    background-image: url('/public/images/img-1.jpg');
-    background-position: center;
-    background-size: fill;
-    background-repeat: no-repeat;
-    color: #fff;
+    color: #000;
     font-size: 100px;
   }
   
   .login {
-    background-image: url('/public/images/img-2.jpg');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    color: #fff;
+    color: #000;
     font-size: 100px;
   }
