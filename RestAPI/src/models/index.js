@@ -27,10 +27,17 @@ db.teams = require('./teamModel') (sequelize, DataTypes)
 db.tournaments = require('./tournamentModel') (sequelize, DataTypes)
 db.trainers = require('./trainerModel') (sequelize, DataTypes)
 db.types = require('./typeModel') (sequelize, DataTypes)
+db.trainerTournaments = require('./trainerTournamentModel') (sequelize, DataTypes)
 
 db.teams.belongsTo(db.formats, { foreignKey: 'id_format' })
 db.selectedPokemon.belongsTo(db.pokemon, { foreignKey: 'id_pokemon' })
 db.selectedPokemon.belongsTo(db.natures, { foreignKey: 'id_nature' })
 db.selectedPokemon.belongsTo(db.items, { foreignKey: 'id_item' })
+
+db.tournaments.hasMany(db.trainerTournaments);
+db.trainerTournaments.belongsTo(db.tournaments);
+
+db.trainers.hasMany(db.trainerTournaments);
+db.trainerTournaments.belongsTo(db.trainers);
 
 module.exports = db

@@ -25,8 +25,7 @@ const signup = async (req, res) => {
             res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
             console.log("trainer", JSON.stringify(trainer, null, 2));
             console.log(token);
-            
-            return res.status(201).send(trainer);
+            return res.status(201).send({ trainer, token });
         } else {
             return res.status(409).send("Details are not correct");
         }
@@ -62,7 +61,7 @@ const login = async (req, res) => {
                 res.cookie("jwt", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: true });
                 console.log("trainer", JSON.stringify(trainer, null, 2));
                 console.log(token);
-                return res.status(201).send(trainer);
+                return res.status(201).send({ trainer, token });
             } else {
                 return res.status(401).send("Authentication failed");
             }

@@ -44,4 +44,4 @@ app.use('/api/tournament', tournamentRoutes)
 app.use('/api/trainer', trainerRoutes)
 app.use('/api/type', typeRoutes)
 
-app.listen(PORT, () => console.log(`app listening on port ${PORT}`))
+app.listen(PORT, () => console.log(`app listening on port ${PORT}`));
