@@ -1,19 +1,22 @@
 import React, {useEffect, useState} from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faPencil } from '@fortawesome/free-solid-svg-icons'
 import '../../App.css'
 import './Teams.css'
-import {get} from "../../utils/fetcher"
+import {get} from "../../utils/fetcher";
+import {useAuthSession} from "../../hooks/useAuthSession";
+import Button from '@mui/material/Button';
 
 function Teams() {
+    const { session } = useAuthSession();
+    const navigate = useNavigate()
     const [teamList, setTeamList] = useState([])
-    const [showTrainerTeams, setShowTrainerTeams] = useState(true)
-    const trainerId = 1
+    const [showTrainerTeams, setShowTrainerTeams] = useState(false)
 
     useEffect(() => {
         const fetchTeams = async () => {
-            const url = showTrainerTeams ? `/api/team/trainer/${trainerId}` : '/api/team';
+            const url = (session && showTrainerTeams) ? `/api/team/trainer/${session.session.id}` : '/api/team';
             try {
                 const teamResponse = await get(url)
                 setTeamList(teamResponse);
@@ -21,9 +24,8 @@ function Teams() {
                 console.error('Error fetching data:', error)
             }
         }
-
         fetchTeams()
-    }, [showTrainerTeams])
+    }, [showTrainerTeams, session])
 
     const changeTeams = () => {
         setShowTrainerTeams(!showTrainerTeams)
@@ -31,9 +33,14 @@ function Teams() {
 
     return (
         <>
-            <button onClick={changeTeams}>
-                {showTrainerTeams ? 'Show public teams' : 'Show trainer teams'}
-            </button>
+            { session &&
+                <Button
+                    onClick={changeTeams}
+                    variant="contained"
+                    style={{ 'backgroundColor': '#000000', 'color': '#ffffff', 'border': '2px solid #ffffff'}}>
+                    {showTrainerTeams ? 'Show public teams' : 'Show trainer teams'}
+                </Button>
+            }
             <div className="table-container">
                 <h2>Teams</h2>
                 <table className="table">
@@ -54,7 +61,7 @@ function Teams() {
                             {showTrainerTeams && <td>{team.private ? "Yes" : "No"}</td>}
                             <td>{team.format.generation}</td>
                             <td>
-                                <Link to='/' className='navbar-logo'>
+                                <Link to={team.id} className='navbar-logo' onClick={navigate(team.id)}>
                                     <FontAwesomeIcon icon={showTrainerTeams ? faPencil : faEye} style={{color: "#000000"}}/>
                                 </Link>
                             </td>

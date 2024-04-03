@@ -32,3 +32,16 @@ export const post = (
         .catch((error) => {
             throw error.response?.data ?? error;
         });
+
+// const onFullfilledAuthTokenInterceptor = async (
+//     requestConfig,
+// ) => {
+//     const authTokens = getAuthTokens();
+//     if (authTokens.accessToken) {
+//         requestConfig.headers = requestConfig.headers ?? {};
+//         requestConfig.headers.Authorization = `JWT ${authTokens.accessToken}`;
+//     }
+//     return requestConfig;
+// };
+//
+// axiosInstance.interceptors.request.use(onFullfilledAuthTokenInterceptor);

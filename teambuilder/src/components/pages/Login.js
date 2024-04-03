@@ -1,13 +1,19 @@
-import React, {useMemo} from 'react'
+import React, {useMemo, useState} from 'react'
 import '../../App.css'
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import z from 'zod';
-import {Button, Container, Paper, Stack, Typography} from "@mui/material";
+import {Alert, Button, Container, Paper, Stack, Typography} from "@mui/material";
 import {FormFieldControl} from "../FormFieldControl";
 import {post} from "../../utils/fetcher";
+import {useAuthSession} from "../../hooks/useAuthSession";
+import {useNavigate} from "react-router-dom";
 
 function Login() {
+    const { setSession } = useAuthSession();
+    const navigate = useNavigate();
+    const [error, setError] = useState('');
+
     const schema = useMemo(
         () =>
             z.object({
@@ -26,9 +32,11 @@ function Login() {
     const onSubmit = async (values) => {
         try {
             const result = await post('/api/trainer/login', values);
-            console.log('result', result);
+            setSession({ session: result.trainer, token: result.token });
+            navigate('/', { replace: true });
         } catch (e) {
             console.error('Error logging in:', e);
+            setError('Invalid username or password');
         }
     };
 
@@ -37,6 +45,7 @@ function Login() {
             <Container sx={{my: 12, display: 'flex', justifyContent: 'center'}}>
                 <Paper elevation={1} sx={{py: 3, px: 4, minWidth: '400px', maxWidth: '500px'}}>
                     <Typography variant="h4" sx={{mb: 4, textAlign: 'center'}}>LOGIN</Typography>
+                    {error && <Alert sx={{my: 3}} severity="error">{error}</Alert>}
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Stack spacing={4}>
                             <FormFieldControl name="username" control={control} label="Username" type="text"/>

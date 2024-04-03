@@ -1,23 +1,37 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons'
 import { PokemonLogo } from './PokemonLogo'
 import { Button } from './Button'
 import './Navbar.css'
+import {useAuthSession} from "../hooks/useAuthSession";
+import {get} from "../utils/fetcher";
 
 function Navbar() {
+  const { session, logout } = useAuthSession();
   const [click, setClick] = useState(false)
-  const [button, setButton] = useState(true)
-
+  const [showButtons, setShowButtons] = useState(true)
   const handleClick = () => setClick(!click)
   const closeMobileMenu = () => setClick(false)
+  let navigate  = useNavigate();
 
   const showButton = () => {
     if (window.innerWidth <= 960) {
-      setButton(false);
+      setShowButtons(false);
     } else {
-      setButton(true);
+      setShowButtons(true);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      logout();
+      closeMobileMenu();
+      await get('/api/trainer/logout');
+      navigate ('/');
+    } catch (e) {
+        console.error('Error logging out:', e);
     }
   };
 
@@ -53,13 +67,19 @@ function Navbar() {
                 Tournaments
               </Link>
             </li>
-            <li>
-              <Link to='/login' className='nav-links-mobile' onClick={closeMobileMenu}>
-                Log in
-              </Link>
-            </li>
           </ul>
-          {button && <Button buttonStyle='btn--outline'>Log in</Button>}
+          {showButtons && (
+              <>
+                  {session ? (
+                      <Button onClick={handleLogout} buttonStyle='btn--outline'>Log out</Button>
+                  ) : (
+                      <>
+                          <Button to="/login" onClick={closeMobileMenu} buttonStyle='btn--outline'>Log in</Button>
+                          <Button to="/register" onClick={closeMobileMenu} buttonStyle='btn--outline'>Sign up</Button>
+                      </>
+                  )}
+              </>
+          )}
         </div>
       </nav>
     </>

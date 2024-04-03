@@ -13,7 +13,7 @@ function Tournaments() {
     const fetchTournaments = async () => {
       try {
         const tournamentResponse = await get('http://localhost:3001/api/tournament')
-        setTournamentList(tournamentResponse.data)
+        setTournamentList(tournamentResponse)
       } catch (error) {
         console.error('Error fetching data:', error)
       }
@@ -38,20 +38,26 @@ function Tournaments() {
 
   return (
     <>
-      <Autocomplete
-        disablePortal
-        id="combo-box-demo"
-        options={tournamentList.map(tournament => tournament.name)}
-        value={selectedTournament}
-        onChange={handleTournamentChange}
-        sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Tournament" />}
-      />
-      <div>
-        <h2>Tournament Details</h2>
-        <p>Name: {tournamentDetails.name}</p>
-        <p>Other details...</p>
-      </div>
+      { tournamentList &&
+        <div>
+          <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={tournamentList.map(tournament => tournament.name)}
+            value={selectedTournament}
+            onChange={handleTournamentChange}
+            sx={{ width: 300 }}
+            renderInput={(params) => <TextField {...params} label="Tournament" />}
+          />
+          {selectedTournament && <div>
+            <h2>Tournament Details</h2>
+            <p>Name: {selectedTournament}</p>
+            <p>Number of players registered: {tournamentDetails.players}</p>
+            <p>Format: {tournamentDetails.format}</p>
+            <p>Generation: {tournamentDetails.generation}</p>
+          </div> }
+        </div>
+      }
     </>
   )
 }
