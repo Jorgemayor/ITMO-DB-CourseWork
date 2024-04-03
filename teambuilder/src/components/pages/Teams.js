@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faPencil } from '@fortawesome/free-solid-svg-icons'
 import '../../App.css'
 import './Teams.css'
-import {get} from "../../utils/fetcher";
+import {get} from "../../utils/fetcher"
 
 function Teams() {
     const [teamList, setTeamList] = useState([])
@@ -15,7 +15,7 @@ function Teams() {
         const fetchTeams = async () => {
             const url = showTrainerTeams ? `/api/team/trainer/${trainerId}` : '/api/team';
             try {
-                const teamResponse = await get(url);
+                const teamResponse = await get(url)
                 setTeamList(teamResponse);
             } catch (error) {
                 console.error('Error fetching data:', error)
