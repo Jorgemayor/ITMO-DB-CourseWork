@@ -2,7 +2,7 @@ const {Sequelize, DataTypes} = require('sequelize')
 
 const envVars = process.env
 const sequelize = new Sequelize(
-    `postgres://${envVars.USER}:${envVars.PASS}@${envVars.DOMAIN_DB}:${envVars.PORT_DB}/${envVars.DB_NAME}`,
+    `postgres://${envVars.PG_USER}:${envVars.PG_PASS}@${envVars.DOMAIN_DB}:${envVars.PORT_DB}/${envVars.DB_NAME}`,
     {dialect: "postgres"}
 )
 
@@ -32,4 +32,5 @@ db.teams.belongsTo(db.formats, { foreignKey: 'id_format' })
 db.selectedPokemon.belongsTo(db.pokemon, { foreignKey: 'id_pokemon' })
 db.selectedPokemon.belongsTo(db.natures, { foreignKey: 'id_nature' })
 db.selectedPokemon.belongsTo(db.items, { foreignKey: 'id_item' })
+
 module.exports = db
