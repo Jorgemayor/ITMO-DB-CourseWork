@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 16.2
--- Dumped by pg_dump version 16.2
+-- Dumped from database version 14.10 (Ubuntu 14.10-0ubuntu0.22.04.1)
+-- Dumped by pg_dump version 14.10 (Ubuntu 14.10-0ubuntu0.22.04.1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -119,7 +119,7 @@ CREATE SEQUENCE public.abilities_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.abilities_id_seq OWNER TO jorge;
+ALTER TABLE public.abilities_id_seq OWNER TO jorge;
 
 --
 -- Name: abilities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jorge
@@ -156,7 +156,7 @@ CREATE SEQUENCE public.formats_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.formats_id_seq OWNER TO jorge;
+ALTER TABLE public.formats_id_seq OWNER TO jorge;
 
 --
 -- Name: formats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jorge
@@ -193,7 +193,7 @@ CREATE SEQUENCE public.items_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.items_id_seq OWNER TO jorge;
+ALTER TABLE public.items_id_seq OWNER TO jorge;
 
 --
 -- Name: items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jorge
@@ -251,7 +251,7 @@ CREATE SEQUENCE public.movements_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.movements_id_seq OWNER TO jorge;
+ALTER TABLE public.movements_id_seq OWNER TO jorge;
 
 --
 -- Name: movements_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jorge
@@ -287,7 +287,7 @@ CREATE SEQUENCE public.natures_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.natures_id_seq OWNER TO jorge;
+ALTER TABLE public.natures_id_seq OWNER TO jorge;
 
 --
 -- Name: natures_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jorge
@@ -328,7 +328,7 @@ CREATE SEQUENCE public.pokemon_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.pokemon_id_seq OWNER TO jorge;
+ALTER TABLE public.pokemon_id_seq OWNER TO jorge;
 
 --
 -- Name: pokemon_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jorge
@@ -348,47 +348,6 @@ CREATE TABLE public.pokemon_movements (
 
 
 ALTER TABLE public.pokemon_movements OWNER TO jorge;
-
---
--- Name: pokemons; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.pokemons (
-    id integer NOT NULL,
-    name text NOT NULL,
-    "baseStats" json NOT NULL,
-    "idType1" smallint NOT NULL,
-    "idType2" smallint,
-    "idAbility1" integer NOT NULL,
-    "idAbility2" integer,
-    "idHiddenAbility" integer,
-    generation smallint
-);
-
-
-ALTER TABLE public.pokemons OWNER TO jorge;
-
---
--- Name: pokemons_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.pokemons_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.pokemons_id_seq OWNER TO jorge;
-
---
--- Name: pokemons_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.pokemons_id_seq OWNED BY public.pokemons.id;
-
 
 --
 -- Name: selected_pokemon; Type: TABLE; Schema: public; Owner: jorge
@@ -425,7 +384,7 @@ CREATE SEQUENCE public.selected_pokemon_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.selected_pokemon_id_seq OWNER TO jorge;
+ALTER TABLE public.selected_pokemon_id_seq OWNER TO jorge;
 
 --
 -- Name: selected_pokemon_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jorge
@@ -462,7 +421,7 @@ CREATE SEQUENCE public.teams_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.teams_id_seq OWNER TO jorge;
+ALTER TABLE public.teams_id_seq OWNER TO jorge;
 
 --
 -- Name: teams_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jorge
@@ -497,7 +456,7 @@ CREATE SEQUENCE public.tournaments_id_format_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.tournaments_id_format_seq OWNER TO jorge;
+ALTER TABLE public.tournaments_id_format_seq OWNER TO jorge;
 
 --
 -- Name: tournaments_id_format_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jorge
@@ -519,7 +478,7 @@ CREATE SEQUENCE public.tournaments_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.tournaments_id_seq OWNER TO jorge;
+ALTER TABLE public.tournaments_id_seq OWNER TO jorge;
 
 --
 -- Name: tournaments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jorge
@@ -529,23 +488,22 @@ ALTER SEQUENCE public.tournaments_id_seq OWNED BY public.tournaments.id;
 
 
 --
--- Name: trainers; Type: TABLE; Schema: public; Owner: postgres
+-- Name: trainers; Type: TABLE; Schema: public; Owner: jorge
 --
 
 CREATE TABLE public.trainers (
     id integer NOT NULL,
-    username character varying(255) NOT NULL,
-    email character varying(255) NOT NULL,
-    password character varying(255) NOT NULL,
-    "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL
+    username character varying(12) NOT NULL,
+    password character varying(20) NOT NULL,
+    email character varying(256),
+    createdat timestamp without time zone DEFAULT now()
 );
 
 
 ALTER TABLE public.trainers OWNER TO jorge;
 
 --
--- Name: trainers_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: trainers_id_seq; Type: SEQUENCE; Schema: public; Owner: jorge
 --
 
 CREATE SEQUENCE public.trainers_id_seq
@@ -557,10 +515,10 @@ CREATE SEQUENCE public.trainers_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.trainers_id_seq OWNER TO jorge;
+ALTER TABLE public.trainers_id_seq OWNER TO jorge;
 
 --
--- Name: trainers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: trainers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jorge
 --
 
 ALTER SEQUENCE public.trainers_id_seq OWNED BY public.trainers.id;
@@ -604,7 +562,7 @@ CREATE SEQUENCE public.types_id_seq
     CACHE 1;
 
 
-ALTER SEQUENCE public.types_id_seq OWNER TO jorge;
+ALTER TABLE public.types_id_seq OWNER TO jorge;
 
 --
 -- Name: types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jorge
@@ -656,13 +614,6 @@ ALTER TABLE ONLY public.pokemon ALTER COLUMN id SET DEFAULT nextval('public.poke
 
 
 --
--- Name: pokemons id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.pokemons ALTER COLUMN id SET DEFAULT nextval('public.pokemons_id_seq'::regclass);
-
-
---
 -- Name: selected_pokemon id; Type: DEFAULT; Schema: public; Owner: jorge
 --
 
@@ -691,7 +642,7 @@ ALTER TABLE ONLY public.tournaments ALTER COLUMN id_format SET DEFAULT nextval('
 
 
 --
--- Name: trainers id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: trainers id; Type: DEFAULT; Schema: public; Owner: jorge
 --
 
 ALTER TABLE ONLY public.trainers ALTER COLUMN id SET DEFAULT nextval('public.trainers_id_seq'::regclass);
@@ -3895,14 +3846,6 @@ COPY public.pokemon_movements (id_pokemon, id_movement) FROM stdin;
 
 
 --
--- Data for Name: pokemons; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY public.pokemons (id, name, "baseStats", "idType1", "idType2", "idAbility1", "idAbility2", "idHiddenAbility", generation) FROM stdin;
-\.
-
-
---
 -- Data for Name: selected_pokemon; Type: TABLE DATA; Schema: public; Owner: jorge
 --
 
@@ -3933,7 +3876,6 @@ COPY public.teams (id, id_trainer, id_format, name, private) FROM stdin;
 4	2	2	Water type team	f
 5	3	1	Champion's team	f
 6	3	2	Stall team	f
-7	1	2	testTeam2	f
 \.
 
 
@@ -3949,11 +3891,14 @@ COPY public.tournaments (id, name, id_format) FROM stdin;
 
 
 --
--- Data for Name: trainers; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: trainers; Type: TABLE DATA; Schema: public; Owner: jorge
 --
 
-COPY public.trainers (id, username, email, password, "createdAt", "updatedAt") FROM stdin;
-1	test1	test1@mail.com	$2b$10$4Gw0qGrT19rm0Pk9XZHiculy3eNWhQ3MrpnIX9HxjFcIfLxF55JrK	2024-03-26 17:46:32.995+03	2024-03-26 17:46:32.995+03
+COPY public.trainers (id, username, password, email, createdat) FROM stdin;
+1	jorgemayor	test123	test@email.com	2023-12-13 11:01:29.919367
+2	gera	test123	test2@mail.com	2023-12-13 11:01:29.919367
+3	test	test123	test3@mail.com	2023-12-13 11:01:29.919367
+4	luffy	1234	test	2023-12-13 12:28:25.980872
 \.
 
 
@@ -4007,7 +3952,7 @@ SELECT pg_catalog.setval('public.abilities_id_seq', 310, true);
 -- Name: formats_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jorge
 --
 
-SELECT pg_catalog.setval('public.formats_id_seq', 2, true);
+SELECT pg_catalog.setval('public.formats_id_seq', 1, false);
 
 
 --
@@ -4028,7 +3973,7 @@ SELECT pg_catalog.setval('public.movements_id_seq', 921, true);
 -- Name: natures_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jorge
 --
 
-SELECT pg_catalog.setval('public.natures_id_seq', 25, true);
+SELECT pg_catalog.setval('public.natures_id_seq', 1, false);
 
 
 --
@@ -4036,13 +3981,6 @@ SELECT pg_catalog.setval('public.natures_id_seq', 25, true);
 --
 
 SELECT pg_catalog.setval('public.pokemon_id_seq', 1318, true);
-
-
---
--- Name: pokemons_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.pokemons_id_seq', 1, false);
 
 
 --
@@ -4056,7 +3994,7 @@ SELECT pg_catalog.setval('public.selected_pokemon_id_seq', 12, true);
 -- Name: teams_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jorge
 --
 
-SELECT pg_catalog.setval('public.teams_id_seq', 8, true);
+SELECT pg_catalog.setval('public.teams_id_seq', 1, false);
 
 
 --
@@ -4070,21 +4008,21 @@ SELECT pg_catalog.setval('public.tournaments_id_format_seq', 1, false);
 -- Name: tournaments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jorge
 --
 
-SELECT pg_catalog.setval('public.tournaments_id_seq', 3, true);
+SELECT pg_catalog.setval('public.tournaments_id_seq', 1, false);
 
 
 --
--- Name: trainers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: trainers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jorge
 --
 
-SELECT pg_catalog.setval('public.trainers_id_seq', 1, true);
+SELECT pg_catalog.setval('public.trainers_id_seq', 1, false);
 
 
 --
 -- Name: types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: jorge
 --
 
-SELECT pg_catalog.setval('public.types_id_seq', 18, true);
+SELECT pg_catalog.setval('public.types_id_seq', 1, false);
 
 
 --
@@ -4152,14 +4090,6 @@ ALTER TABLE ONLY public.pokemon
 
 
 --
--- Name: pokemons pokemons_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.pokemons
-    ADD CONSTRAINT pokemons_pkey PRIMARY KEY (id);
-
-
---
 -- Name: selected_pokemon selected_pokemon_pkey; Type: CONSTRAINT; Schema: public; Owner: jorge
 --
 
@@ -4192,7 +4122,7 @@ ALTER TABLE ONLY public.tournaments
 
 
 --
--- Name: trainers trainers_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: trainers trainers_email_key; Type: CONSTRAINT; Schema: public; Owner: jorge
 --
 
 ALTER TABLE ONLY public.trainers
@@ -4200,7 +4130,7 @@ ALTER TABLE ONLY public.trainers
 
 
 --
--- Name: trainers trainers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: trainers trainers_pkey; Type: CONSTRAINT; Schema: public; Owner: jorge
 --
 
 ALTER TABLE ONLY public.trainers
@@ -4216,7 +4146,7 @@ ALTER TABLE ONLY public.trainers_tournaments
 
 
 --
--- Name: trainers trainers_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: trainers trainers_username_key; Type: CONSTRAINT; Schema: public; Owner: jorge
 --
 
 ALTER TABLE ONLY public.trainers
@@ -4409,6 +4339,14 @@ ALTER TABLE ONLY public.teams
 
 
 --
+-- Name: teams teams_id_trainer_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jorge
+--
+
+ALTER TABLE ONLY public.teams
+    ADD CONSTRAINT teams_id_trainer_fkey FOREIGN KEY (id_trainer) REFERENCES public.trainers(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: tournaments tournaments_id_format_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jorge
 --
 
@@ -4422,6 +4360,14 @@ ALTER TABLE ONLY public.tournaments
 
 ALTER TABLE ONLY public.trainers_tournaments
     ADD CONSTRAINT trainers_tournaments_id_tournament_fkey FOREIGN KEY (id_tournament) REFERENCES public.tournaments(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: trainers_tournaments trainers_tournaments_id_trainer_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jorge
+--
+
+ALTER TABLE ONLY public.trainers_tournaments
+    ADD CONSTRAINT trainers_tournaments_id_trainer_fkey FOREIGN KEY (id_trainer) REFERENCES public.trainers(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
