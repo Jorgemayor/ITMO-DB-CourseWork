@@ -7,16 +7,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
-@RequestMapping(path = "api/user")
+@RequestMapping(path = "api/v2/user")
 public class UserController {
 
     private UserService userService;
 
     @GetMapping
-    public void getUsers() {
-
+    public ResponseEntity<List<User>> getUsers() {
+        return ResponseEntity.ok(userService.getUsers());
     }
 
     @PostMapping

@@ -3,13 +3,17 @@ package com.jorge.pkmntb.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @Table(
         name = "formats"
 )
+@NoArgsConstructor
+@AllArgsConstructor
 public class Format {
     @Id
     @SequenceGenerator(
